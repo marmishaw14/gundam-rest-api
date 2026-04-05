@@ -1,5 +1,5 @@
 import { Weapon } from "../models/weaponModel";
-import { createDocument, getDocuments } from "../repositories/firestoreRepository";
+import { createDocument, getDocuments, getDocumentById, updateDocument } from "../repositories/firestoreRepository";
 
 const WEAPONS_COLLECTION = "weapons";
 
@@ -29,4 +29,24 @@ export const getAllWeapons = async (): Promise<Weapon[]> => {
             ...weaponsData
         } as Weapon;
     });
+};
+
+export const getWeaponById = async (id: string): Promise<Weapon> => {
+    const doc: FirebaseFirestore.DocumentSnapshot | null = await getDocumentById(WEAPONS_COLLECTION, id);
+
+    if (!doc) {
+        throw new Error(`Weapon with id ${id} not found.`)
+    }
+
+    return doc.data() as Weapon;
+};
+
+export const updateWeaponById = async (id: string, weaponData: Partial<Weapon>): Promise<Weapon> => {
+    try {
+        await updateDocument(WEAPONS_COLLECTION, id, weaponData);
+
+        return { id, ...weaponData } as Weapon;
+    } catch (error) {
+        throw new Error(`Weapon with id ${id} not found.`)
+    }
 };
