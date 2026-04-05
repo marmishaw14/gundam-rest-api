@@ -4,6 +4,13 @@ import { successResponse } from "../models/responseModel";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import { MobileSuit } from "../models/mobileSuitModel";
 
+/**
+ * Handles creating a new mobile suit.
+ * @param {Request} req - The request object. 
+ * @param {Response} res - The response object.
+ * @param {NextFunction} next - The next middleware function.
+ * @returns {Promise<void>} 
+ */
 export const createMobileSuitHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const mobileSuit: MobileSuit = await mobileSuitService.createMobileSuit(req.body);
