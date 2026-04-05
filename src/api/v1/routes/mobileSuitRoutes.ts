@@ -11,4 +11,9 @@ mobileSuitRouter.post(
     mobileSuitController.createMobileSuitHandler
 );
 
+mobileSuitRouter.get(
+    "/mobile-suits",
+    mobileSuitController.getAllMobileSuitsHandler
+);
+
 export default mobileSuitRouter;
