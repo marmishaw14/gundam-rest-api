@@ -36,6 +36,8 @@
     "express": "^5.2.1",
     "firebase-admin": "^13.7.0",
     "joi": "^18.1.2",
-    "morgan": "^1.10.1"
+    "morgan": "^1.10.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }
