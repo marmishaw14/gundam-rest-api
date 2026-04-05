@@ -20,6 +20,13 @@ export const createMobileSuitHandler = async (req: Request, res: Response, next:
     }
 };
 
+/**
+ * 
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object. 
+ * @param {NextFunction} next - The next middleware function.
+ * @returns {Promise<void>}
+ */
 export const getAllMobileSuitsHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const mobileSuits: MobileSuit[] = await mobileSuitService.getAllMobileSuits();
@@ -27,4 +34,20 @@ export const getAllMobileSuitsHandler = async (req: Request, res: Response, next
     } catch (error: unknown) {
         next(error);
     }
-}
+};
+
+/**
+ * 
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object. 
+ * @param {NextFunction} next - The next middleware function.
+ * @returns {Promise<void>}
+ */
+export const getMobileSuitByIdHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const mobileSuit: MobileSuit = await mobileSuitService.getMobileSuitById(req.params.id as string);
+        res.status(HTTP_STATUS.OK).json(successResponse(mobileSuit, `Mobile suit with id: ${req.params.id} retrieved successfully`));
+    } catch (error: unknown) {
+        next(error);
+    }
+};
