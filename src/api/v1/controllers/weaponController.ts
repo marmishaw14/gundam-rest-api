@@ -35,3 +35,35 @@ export const getAllWeaponsHandler = async (req: Request, res: Response, next: Ne
         next(error);
     }
 };
+
+/**
+ * Handles getting a weapon in the artillery by its id.
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object. 
+ * @param {NextFunction} next - The next middleware function.
+ * @returns {Promise<void>}
+ */
+export const getWeaponByIdHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const weapon: Weapon = await weaponService.getWeaponById(req.params.id as string);
+        res.status(HTTP_STATUS.OK).json(successResponse(weapon, `Weapon with id: ${req.params.id} retrieved successfully.`));
+    } catch (error: unknown) {
+        next(error);
+    }
+};
+
+/**
+ * Handles updating a weapon's information in the artillery by its id.
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object. 
+ * @param {NextFunction} next - The next middleware function.
+ * @returns {Promise<void>}
+ */
+export const updateWeaponHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const weapon: Weapon = await weaponService.updateWeaponById(req.params.id as string, req.body);
+        res.status(HTTP_STATUS.OK).json(successResponse(weapon, "Weapon information updated."));
+    } catch (error: unknown) {
+        next(error);
+    }
+};
