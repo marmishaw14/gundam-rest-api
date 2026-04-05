@@ -28,4 +28,10 @@ mobileSuitRouter.put(
     mobileSuitController.updateMobileSuitHandler
 );
 
+mobileSuitRouter.delete(
+    "/mobile-suits/:id",
+    validateRequest(mobileSuitSchemas.delete),
+    mobileSuitController.deleteMobileSuitHandler
+);
+
 export default mobileSuitRouter;
