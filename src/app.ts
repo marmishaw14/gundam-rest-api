@@ -1,6 +1,7 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
+import mobileSuitRoutes from "./api/v1/routes/mobileSuitRoutes";
 
 // Environment variables loaded before internal imports
 dotenv.config();
@@ -39,5 +40,7 @@ app.get("/api/v1/health", (req, res) => {
 
     res.json(healthData);
 });
+
+app.use("/api/v1/", mobileSuitRoutes);
 
 export default app;
