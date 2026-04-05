@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/marmishaw14/comp-3018-capstone-project#readme",
   "devDependencies": {
+    "@redocly/cli": "^2.25.4",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
     "@types/node": "^25.5.2",
