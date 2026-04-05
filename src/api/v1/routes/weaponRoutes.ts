@@ -11,4 +11,10 @@ weaponRouter.post(
     weaponController.createWeaponHandler
 );
 
+
+weaponRouter.get(
+    "/weapons",
+    weaponController.getAllWeaponsHandler
+);
+
 export default weaponRouter;
