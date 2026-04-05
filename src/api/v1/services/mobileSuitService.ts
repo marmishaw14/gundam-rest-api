@@ -1,5 +1,5 @@
 import { MobileSuit } from "../models/mobileSuitModel";
-import { createDocument, getDocuments } from "../repositories/firestoreRepository";
+import { createDocument, getDocumentById, getDocuments } from "../repositories/firestoreRepository";
 
 const MOBILE_SUITS_COLLECTION = "mobile-suits";
 
@@ -30,3 +30,13 @@ export const getAllMobileSuits = async (): Promise<MobileSuit[]> => {
         } as MobileSuit;
     });
 };
+
+export const getMobileSuitById = async (id: string): Promise<MobileSuit> => {
+    const doc: FirebaseFirestore.DocumentSnapshot | null = await getDocumentById(MOBILE_SUITS_COLLECTION, id);
+
+    if (!doc) {
+        throw new Error(`Event with id ${id} not found.`);
+    }
+
+    return doc.data() as MobileSuit;
+} 
