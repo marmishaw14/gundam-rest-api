@@ -1,5 +1,6 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
+import morgan from "morgan";
 
 // Environment variables loaded before internal imports
 dotenv.config();
@@ -18,6 +19,9 @@ interface HealthCheckResponse {
 const app: Express = express();
 
 app.use(express.json());
+
+// Use Morgan for HTTP request logging
+app.use(morgan("combined"));
 
 // Define a route
 app.get("/", (req, res) => {
