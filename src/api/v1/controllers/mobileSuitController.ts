@@ -51,3 +51,19 @@ export const getMobileSuitByIdHandler = async (req: Request, res: Response, next
         next(error);
     }
 };
+
+/**
+ * Handles updating a mobile suit in the fleet by its id.
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object. 
+ * @param {NextFunction} next - The next middleware function.
+ * @returns {Promise<void>}
+ */
+export const updateMobileSuitHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const mobileSuit: MobileSuit = await mobileSuitService.updateMobileSuitById(req.params.id as string, req.body);
+        res.status(HTTP_STATUS.OK).json(successResponse(mobileSuit, "Mobile suit updated."));
+    } catch (error: unknown) {
+        next(error);
+    }
+}
