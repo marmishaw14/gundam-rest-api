@@ -66,4 +66,13 @@ export const updateMobileSuitHandler = async (req: Request, res: Response, next:
     } catch (error: unknown) {
         next(error);
     }
-}
+};
+
+export const deleteMobileSuitHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        await mobileSuitService.deleteMobileSuitById(req.params.id as string);
+        res.status(HTTP_STATUS.OK).json(successResponse({}, "Mobile suit deleted from fleet."));
+    } catch (error: unknown) {
+        next(error);
+    }
+};
