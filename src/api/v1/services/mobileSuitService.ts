@@ -35,7 +35,7 @@ export const getMobileSuitById = async (id: string): Promise<MobileSuit> => {
     const doc: FirebaseFirestore.DocumentSnapshot | null = await getDocumentById(MOBILE_SUITS_COLLECTION, id);
 
     if (!doc) {
-        throw new Error(`Event with id ${id} not found.`);
+        throw new Error(`Mobile suit with id ${id} not found.`);
     }
 
     return doc.data() as MobileSuit;
@@ -47,7 +47,7 @@ export const updateMobileSuitById = async (id: string, mobileSuitData: Partial<M
 
         return { id, ...mobileSuitData } as MobileSuit;
     } catch (error) {
-        throw new Error(`Event with id ${id} not found`);
+        throw new Error(`Mobile suit with id ${id} not found.`);
     }
 };
 
