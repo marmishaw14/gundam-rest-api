@@ -17,4 +17,16 @@ weaponRouter.get(
     weaponController.getAllWeaponsHandler
 );
 
+weaponRouter.get(
+    "/weapons/:id",
+    validateRequest(weaponSchemas.getById),
+    weaponController.getWeaponByIdHandler
+);
+
+weaponRouter.put(
+    "/weapons/:id",
+    validateRequest(weaponSchemas.update),
+    weaponController.updateWeaponHandler
+);
+
 export default weaponRouter;
