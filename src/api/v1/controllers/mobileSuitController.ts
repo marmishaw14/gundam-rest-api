@@ -16,6 +16,15 @@ export const createMobileSuitHandler = async (req: Request, res: Response, next:
         const mobileSuit: MobileSuit = await mobileSuitService.createMobileSuit(req.body);
         res.status(HTTP_STATUS.CREATED).json(successResponse(mobileSuit));
     } catch (error: unknown) {
-        next (error);
+        next(error);
     }
 };
+
+export const getAllMobileSuitsHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const mobileSuits: MobileSuit[] = await mobileSuitService.getAllMobileSuits();
+        res.status(HTTP_STATUS.OK).json(successResponse(mobileSuits, "Fleet of mobile suits retrieved successfully."));
+    } catch (error: unknown) {
+        next(error);
+    }
+}
