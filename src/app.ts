@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import morgan from "morgan";
 import mobileSuitRoutes from "./api/v1/routes/mobileSuitRoutes";
+import weaponRoutes from "./api/v1/routes/weaponRoutes";
 
 
 /**
@@ -44,4 +45,5 @@ app.get("/api/v1/health", (req, res) => {
 
 app.use("/api/v1", mobileSuitRoutes);
 
+app.use("/api/v1", weaponRoutes);
 export default app;
