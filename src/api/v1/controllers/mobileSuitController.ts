@@ -68,6 +68,13 @@ export const updateMobileSuitHandler = async (req: Request, res: Response, next:
     }
 };
 
+/**
+ * Handles deleting a mobile suit from the fleet by its id.
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object. 
+ * @param {NextFunction} next - The next middleware function.
+ * @returns {Promise<void>}
+ */
 export const deleteMobileSuitHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         await mobileSuitService.deleteMobileSuitById(req.params.id as string);
