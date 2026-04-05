@@ -1,5 +1,5 @@
 import { MobileSuit } from "../models/mobileSuitModel";
-import { createDocument, getDocumentById, getDocuments, updateDocument } from "../repositories/firestoreRepository";
+import { createDocument, deleteDocument, getDocumentById, getDocuments, updateDocument } from "../repositories/firestoreRepository";
 
 const MOBILE_SUITS_COLLECTION = "mobile-suits";
 
@@ -50,3 +50,7 @@ export const updateMobileSuitById = async (id: string, mobileSuitData: Partial<M
         throw new Error(`Event with id ${id} not found`);
     }
 };
+
+export const deleteMobileSuitById = async (id: string): Promise<void> => {
+    await deleteDocument(MOBILE_SUITS_COLLECTION, id);
+}
