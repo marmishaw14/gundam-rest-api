@@ -21,7 +21,7 @@ export const createMobileSuitHandler = async (req: Request, res: Response, next:
 };
 
 /**
- * 
+ * Handles getting all mobile suits in the fleet.
  * @param {Request} req - The request object.
  * @param {Response} res - The response object. 
  * @param {NextFunction} next - The next middleware function.
@@ -37,7 +37,7 @@ export const getAllMobileSuitsHandler = async (req: Request, res: Response, next
 };
 
 /**
- * 
+ * Handles getting a mobile suit in the fleet by its id.
  * @param {Request} req - The request object.
  * @param {Response} res - The response object. 
  * @param {NextFunction} next - The next middleware function.
