@@ -1,5 +1,5 @@
 import { Weapon } from "../models/weaponModel";
-import { createDocument } from "../repositories/firestoreRepository";
+import { createDocument, getDocuments } from "../repositories/firestoreRepository";
 
 const WEAPONS_COLLECTION = "weapons";
 
@@ -17,4 +17,16 @@ export const createWeapon = async (weaponData: Weapon): Promise<Weapon> => {
 
     const weaponId = await createDocument<Weapon>(WEAPONS_COLLECTION, weapon);
     return {weaponId, ...weapon};
+};
+
+export const getAllWeapons = async (): Promise<Weapon[]> => {
+    const snapshot: FirebaseFirestore.QuerySnapshot = await getDocuments(WEAPONS_COLLECTION);
+
+    return snapshot.docs.map((doc) => {
+        const weaponsData = doc.data();
+        return {
+            weaponId: doc.id,
+            ...weaponsData
+        } as Weapon;
+    });
 };
