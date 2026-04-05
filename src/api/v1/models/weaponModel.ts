@@ -28,6 +28,7 @@ export type WeaponRarity =
  * Interface representing a weapon and its properties that are used by mobile suits.
  */
 export interface Weapon {
+    weaponId: string;
     weaponName: string;
     type: WeaponType;
     damage: number;
