@@ -2,7 +2,7 @@ import Joi from "joi";
 
 // Mobile suit operation schemas organized by request part
 export const mobileSuitSchemas = {
-    // POST /mobile-suits
+    // POST /mobile-suits - Create/add a mobile suit to the fleet
     create: {
         body: Joi.object({
             mobileSuitName: Joi.string()
@@ -116,7 +116,7 @@ export const mobileSuitSchemas = {
         }),
     },
 
-    // DELETE /mobile-suits/:id - Delete mobile suit
+    // DELETE /mobile-suits/:id - Delete mobile suit from the fleet
     delete: {
         params: Joi.object({
             id: Joi.string()
