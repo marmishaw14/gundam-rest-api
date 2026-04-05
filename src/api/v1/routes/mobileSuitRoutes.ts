@@ -16,4 +16,10 @@ mobileSuitRouter.get(
     mobileSuitController.getAllMobileSuitsHandler
 );
 
+mobileSuitRouter.get(
+    "/mobile-suits/:id",
+    validateRequest(mobileSuitSchemas.getById),
+    mobileSuitController.getMobileSuitByIdHandler
+);
+
 export default mobileSuitRouter;
