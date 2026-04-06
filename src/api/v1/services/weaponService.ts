@@ -1,5 +1,5 @@
 import { Weapon } from "../models/weaponModel";
-import { createDocument, getDocuments, getDocumentById, updateDocument } from "../repositories/firestoreRepository";
+import { createDocument, deleteDocument, getDocuments, getDocumentById, updateDocument } from "../repositories/firestoreRepository";
 
 const WEAPONS_COLLECTION = "weapons";
 
@@ -49,4 +49,8 @@ export const updateWeaponById = async (id: string, weaponData: Partial<Weapon>):
     } catch (error) {
         throw new Error(`Weapon with id ${id} not found.`)
     }
+};
+
+export const deleteWeaponById = async (id: string): Promise<void> => {
+    await deleteDocument(WEAPONS_COLLECTION, id);
 };
