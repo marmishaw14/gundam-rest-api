@@ -67,3 +67,19 @@ export const updateWeaponHandler = async (req: Request, res: Response, next: Nex
         next(error);
     }
 };
+
+/**
+ * Handles deleting a weapon from the artillery by its id.
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object.
+ * @param {NextFunction} next - The next middleware function.
+ * @returns {Promise<void>}
+ */
+export const deleteWeaponHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        await weaponService.deleteWeaponById(req.params.id as string);
+        res.status(HTTP_STATUS.OK).json(successResponse({}, "Weapon deleted from artillery."));
+    } catch (error: unknown) {
+        next(error);
+    }
+};
