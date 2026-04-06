@@ -7,7 +7,7 @@ import morgan from "morgan";
 import mobileSuitRoutes from "./api/v1/routes/mobileSuitRoutes";
 import weaponRoutes from "./api/v1/routes/weaponRoutes";
 import missionRoutes from "./api/v1/routes/missionRoutes";
-
+import setupSwagger from "../config/swagger";
 /**
  * Represents response structure for health check endpoint
  */
@@ -18,6 +18,8 @@ interface HealthCheckResponse {
     version: string;
 }
 
+
+
 // Initialize Express application
 const app: Express = express();
 
@@ -27,11 +29,44 @@ app.use(express.json());
 app.use(morgan("combined"));
 
 // Define a route
+/**
+ * @openapi
+ * /:
+ *   get:
+ *     tags:
+ *       - System
+ *     summary: Root endpoint
+ *     description: Simple root endpoint used for basic API reachability checks.
+ *     responses:
+ *       200:
+ *         description: Root response.
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: Hello, World!
+ */
 app.get("/", (req, res) => {
     res.send("Hello, World!");
 });
 
 // Define health check route
+/**
+ * @openapi
+ * /api/v1/health:
+ *   get:
+ *     tags:
+ *       - System
+ *     summary: Health check
+ *     description: Returns API health status and runtime metadata.
+ *     responses:
+ *       200:
+ *         description: Health check data.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/HealthCheckResponse'
+ */
 app.get("/api/v1/health", (req, res) => {
     const healthData: HealthCheckResponse = {
         status: "OK",
@@ -51,5 +86,8 @@ app.use("/api/v1", weaponRoutes);
 
 // Define route for missions
 app.use("/api/v1", missionRoutes);
+
+// Setup Swagger
+setupSwagger(app);
 
 export default app;

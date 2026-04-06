@@ -2,6 +2,7 @@
     "compilerOptions": {
         "target": "ES6",
         "module": "commonjs",
+        "types": ["node"],
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
@@ -12,6 +13,7 @@
         "strictNullChecks": true,
         "strictPropertyInitialization": true,
         "noImplicitThis": true,
+        "ignoreDeprecations": "6.0",
         "noUnusedLocals": true,
         "alwaysStrict": true,
         "baseUrl": "./",
@@ -19,6 +21,6 @@
             "*": ["*"]
         }
     },
-    "include": ["src/**/*", "test/**/*", "config/**/*"],
+    "include": ["src/**/*", "test/**/*", "config/**/*", "scripts/**/*"],
     "exclude": ["node_modules", "dist"]
 }

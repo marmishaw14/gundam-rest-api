@@ -5,6 +5,121 @@ import { missionSchemas } from "../validation/missionSchemas";
 
 const missionRouter = express.Router();
 
+/**
+ * @openapi
+ * /api/v1/missions:
+ *   post:
+ *     tags:
+ *       - Missions
+ *     summary: Create a mission
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateMissionRequest'
+ *     responses:
+ *       201:
+ *         description: Mission created.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
+ *       400:
+ *         description: Validation error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiValidationError'
+ *   get:
+ *     tags:
+ *       - Missions
+ *     summary: Get all missions
+ *     responses:
+ *       200:
+ *         description: List of missions.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
+ *
+ * /api/v1/missions/{id}:
+ *   get:
+ *     tags:
+ *       - Missions
+ *     summary: Get a mission by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Mission retrieved.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
+ *       400:
+ *         description: Validation error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiValidationError'
+ *   put:
+ *     tags:
+ *       - Missions
+ *     summary: Update a mission by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateMissionRequest'
+ *     responses:
+ *       200:
+ *         description: Mission updated.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
+ *       400:
+ *         description: Validation error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiValidationError'
+ *   delete:
+ *     tags:
+ *       - Missions
+ *     summary: Delete a mission by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Mission deleted.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
+ *       400:
+ *         description: Validation error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiValidationError'
+ */
 missionRouter.post(
     "/missions",
     validateRequest(missionSchemas.create),
