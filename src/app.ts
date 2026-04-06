@@ -6,7 +6,7 @@ dotenv.config();
 import morgan from "morgan";
 import mobileSuitRoutes from "./api/v1/routes/mobileSuitRoutes";
 import weaponRoutes from "./api/v1/routes/weaponRoutes";
-
+import missionRoutes from "./api/v1/routes/missionRoutes";
 
 /**
  * Represents response structure for health check endpoint
@@ -48,4 +48,8 @@ app.use("/api/v1", mobileSuitRoutes);
 
 // Define route for weapons
 app.use("/api/v1", weaponRoutes);
+
+// Define route for missions
+app.use("/api/v1", missionRoutes);
+
 export default app;
