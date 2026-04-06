@@ -43,7 +43,9 @@ app.get("/api/v1/health", (req, res) => {
     res.json(healthData);
 });
 
+// Define route for mobile suits
 app.use("/api/v1", mobileSuitRoutes);
 
+// Define route for weapons
 app.use("/api/v1", weaponRoutes);
 export default app;
