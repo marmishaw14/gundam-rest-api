@@ -1,9 +1,12 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
-import morgan from "morgan";
 
 // Environment variables loaded before internal imports
 dotenv.config();
+import morgan from "morgan";
+import mobileSuitRoutes from "./api/v1/routes/mobileSuitRoutes";
+import weaponRoutes from "./api/v1/routes/weaponRoutes";
+import missionRoutes from "./api/v1/routes/missionRoutes";
 
 /**
  * Represents response structure for health check endpoint
@@ -39,5 +42,14 @@ app.get("/api/v1/health", (req, res) => {
 
     res.json(healthData);
 });
+
+// Define route for mobile suits
+app.use("/api/v1", mobileSuitRoutes);
+
+// Define route for weapons
+app.use("/api/v1", weaponRoutes);
+
+// Define route for missions
+app.use("/api/v1", missionRoutes);
 
 export default app;
