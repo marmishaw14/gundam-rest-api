@@ -29,4 +29,10 @@ weaponRouter.put(
     weaponController.updateWeaponHandler
 );
 
+weaponRouter.delete(
+    "/weapons/:id",
+    validateRequest(weaponSchemas.delete),
+    weaponController.deleteWeaponHandler
+);
+
 export default weaponRouter;
