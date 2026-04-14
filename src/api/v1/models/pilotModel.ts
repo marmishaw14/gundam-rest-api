@@ -26,6 +26,6 @@ export interface Pilot {
     pilotName: string;
     pilotRank: PilotRank;
     pilotStatus: PilotStatus;
-    assignedMobileSuitId?: string;
-    imageUrl?: string;
+    assignedMobileSuitId: string;
+    imageUrl: string;
 };
