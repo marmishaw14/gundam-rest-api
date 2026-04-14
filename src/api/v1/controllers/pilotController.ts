@@ -19,3 +19,12 @@ export const createPilotHandler = async (req: Request, res: Response, next: Next
         next(error);
     }
 };
+
+export const getAllPilotsHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const pilots: Pilot[] = await pilotService.getAllPilots();
+        res.status(HTTP_STATUS.OK).json(successResponse(pilots, "List of pilots retrieved successfully."));
+    } catch (error: unknown) {
+        next(error);
+    }
+};
