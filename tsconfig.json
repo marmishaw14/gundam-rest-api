@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "ES6",
         "module": "commonjs",
-        "types": ["node", "jest"],
+        "types": ["node", "jest", "multer"],
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
