@@ -9,6 +9,7 @@ import weaponRoutes from "./api/v1/routes/weaponRoutes";
 import missionRoutes from "./api/v1/routes/missionRoutes";
 import pilotRoutes from "./api/v1/routes/pilotRoutes";
 import setupSwagger from "../config/swagger";
+
 /**
  * Represents response structure for health check endpoint
  */
@@ -18,8 +19,6 @@ interface HealthCheckResponse {
     timestamp: string;
     version: string;
 }
-
-
 
 // Initialize Express application
 const app: Express = express();
