@@ -9,11 +9,11 @@ services:
       - .env
     environment:
       NODE_ENV: production
-      PORT: 3000
+      PORT: 3010
     expose:
-      - "3000"
+      - "3010"
     ports:
-      - "3000:3000"
+      - "3010:3010"
     volumes:
       - uploads_data:/app/uploads
 
