@@ -1,5 +1,5 @@
 import { Pilot } from "../models/pilotModel";
-import { createDocument, getDocuments } from "../repositories/firestoreRepository";
+import { createDocument, getDocumentById, getDocuments, updateDocument, deleteDocument } from "../repositories/firestoreRepository";
 
 const PILOTS_COLLECTION = "pilots";
 
@@ -27,4 +27,28 @@ export const getAllPilots = async (): Promise<Pilot[]> => {
             ...pilotData
         } as Pilot;
     });
+};
+
+export const getPilotById = async (id: string): Promise<Pilot> => {
+    const doc: FirebaseFirestore.DocumentSnapshot | null = await getDocumentById(PILOTS_COLLECTION, id);
+
+    if (!doc) {
+        throw new Error(`Mission with id ${id} not found.`);
+    }
+
+    return doc.data() as Pilot;
+};
+
+export const updatePilotById = async (id: string, pilotData: Partial<Pilot>): Promise<Pilot> => {
+    try {
+        await updateDocument(PILOTS_COLLECTION, id, pilotData);
+
+        return { id, ...pilotData } as Pilot;
+    } catch (error) {
+        throw new Error(`Pilot with id ${id} not found.`);
+    }
+};
+
+export const deletePilotById = async (id: string): Promise<void> => {
+    await deleteDocument(PILOTS_COLLECTION, id);
 };
