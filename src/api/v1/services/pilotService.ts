@@ -1,5 +1,5 @@
 import { Pilot } from "../models/pilotModel";
-import { createDocument } from "../repositories/firestoreRepository";
+import { createDocument, getDocuments } from "../repositories/firestoreRepository";
 
 const PILOTS_COLLECTION = "pilots";
 
@@ -15,4 +15,16 @@ export const createPilot = async (pilotData: Pilot): Promise<Pilot> => {
 
     const id = await createDocument<Pilot>(PILOTS_COLLECTION, pilot);
     return {id, ...pilot};
+};
+
+export const getAllPilots = async (): Promise<Pilot[]> => {
+    const snapshot: FirebaseFirestore.QuerySnapshot = await getDocuments(PILOTS_COLLECTION);
+
+    return snapshot.docs.map((doc) => {
+        const pilotData = doc.data();
+        return {
+            id: doc.id,
+            ...pilotData
+        } as Pilot;
+    });
 };
