@@ -11,4 +11,9 @@ pilotRouter.post(
     pilotController.createPilotHandler
 );
 
+pilotRouter.get(
+    "/pilots",
+    pilotController.getAllPilotsHandler
+)
+
 export default pilotRouter;
