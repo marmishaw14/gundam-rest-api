@@ -14,6 +14,24 @@ pilotRouter.post(
 pilotRouter.get(
     "/pilots",
     pilotController.getAllPilotsHandler
-)
+);
+
+pilotRouter.get(
+    "/pilots/:id",
+    validateRequest(pilotSchemas.getById),
+    pilotController.getPilotByIdHandler
+);
+
+pilotRouter.put(
+    "/pilots/:id",
+    validateRequest(pilotSchemas.update),
+    pilotController.updatePilotByIdHandler
+);
+
+pilotRouter.delete(
+    "/pilots/:id",
+    validateRequest(pilotSchemas.delete),
+    pilotController.deletePilotHandler
+);
 
 export default pilotRouter;
