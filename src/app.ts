@@ -7,6 +7,7 @@ import morgan from "morgan";
 import mobileSuitRoutes from "./api/v1/routes/mobileSuitRoutes";
 import weaponRoutes from "./api/v1/routes/weaponRoutes";
 import missionRoutes from "./api/v1/routes/missionRoutes";
+import pilotRoutes from "./api/v1/routes/pilotRoutes";
 import setupSwagger from "../config/swagger";
 /**
  * Represents response structure for health check endpoint
@@ -86,6 +87,9 @@ app.use("/api/v1", weaponRoutes);
 
 // Define route for missions
 app.use("/api/v1", missionRoutes);
+
+// Define route for pilots
+app.use("/api/v1", pilotRoutes);
 
 // Setup Swagger
 setupSwagger(app);
