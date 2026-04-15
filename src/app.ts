@@ -3,12 +3,15 @@ import dotenv from "dotenv";
 
 // Environment variables loaded before internal imports
 dotenv.config();
+import { collectDefaultMetrics, register } from "prom-client";
 import morgan from "morgan";
 import mobileSuitRoutes from "./api/v1/routes/mobileSuitRoutes";
 import weaponRoutes from "./api/v1/routes/weaponRoutes";
 import missionRoutes from "./api/v1/routes/missionRoutes";
 import pilotRoutes from "./api/v1/routes/pilotRoutes";
 import setupSwagger from "../config/swagger";
+import { HTTP_STATUS } from "./constants/httpConstants";
+
 /**
  * Represents response structure for health check endpoint
  */
@@ -19,10 +22,10 @@ interface HealthCheckResponse {
     version: string;
 }
 
-
-
 // Initialize Express application
 const app: Express = express();
+
+collectDefaultMetrics();
 
 app.use(express.json());
 
@@ -77,6 +80,15 @@ app.get("/api/v1/health", (req, res) => {
     };
 
     res.json(healthData);
+});
+
+app.get("/metrics", async (req, res) => {
+    try{
+        res.set("Content-Type", register.contentType);
+        res.end(await register.metrics());
+    } catch (error) {
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).end(error);
+    }
 });
 
 // Define route for mobile suits
