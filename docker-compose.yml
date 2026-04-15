@@ -16,6 +16,8 @@ services:
       - "3010:3010"
     volumes:
       - uploads_data:/app/uploads
+    networks:
+      - monitoring
 
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -24,6 +26,36 @@ services:
     depends_on:
       - api
     command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}
+    networks:
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: capstone-prometheus
+    restart: unless-stopped
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    depends_on:
+      - api
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: capstone-grafana
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - monitoring
 
 volumes:
   uploads_data:
+
+networks:
+  monitoring:
+    driver: bridge
