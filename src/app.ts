@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 // Environment variables loaded before internal imports
 dotenv.config();
 import { collectDefaultMetrics, register } from "prom-client";
-import morgan from "morgan";
 import { accessLogger, errorLogger, consoleLogger, } from "./api/v1/middleware/logger";
 import errorHandler from "./api/v1/middleware/errorHandler";
 import mobileSuitRoutes from "./api/v1/routes/mobileSuitRoutes";
