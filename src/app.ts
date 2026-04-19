@@ -4,7 +4,8 @@ import dotenv from "dotenv";
 // Environment variables loaded before internal imports
 dotenv.config();
 import { collectDefaultMetrics, register } from "prom-client";
-import morgan from "morgan";
+import { accessLogger, errorLogger, consoleLogger, } from "./api/v1/middleware/logger";
+import errorHandler from "./api/v1/middleware/errorHandler";
 import mobileSuitRoutes from "./api/v1/routes/mobileSuitRoutes";
 import weaponRoutes from "./api/v1/routes/weaponRoutes";
 import missionRoutes from "./api/v1/routes/missionRoutes";
@@ -25,12 +26,19 @@ interface HealthCheckResponse {
 // Initialize Express application
 const app: Express = express();
 
+// Logging middleware
+if (process.env.NODE_ENV === "production") {
+    // In production, log to files
+    app.use(accessLogger);
+    app.use(errorLogger);
+} else {
+    // In development, log to console for immediate feedback
+    app.use(consoleLogger);
+}
+
 collectDefaultMetrics();
 
 app.use(express.json());
-
-// Use Morgan for HTTP request logging
-app.use(morgan("combined"));
 
 // Define a route
 /**
@@ -105,5 +113,8 @@ app.use("/api/v1", pilotRoutes);
 
 // Setup Swagger
 setupSwagger(app);
+
+// Global error handling middleware
+app.use(errorHandler);
 
 export default app;
