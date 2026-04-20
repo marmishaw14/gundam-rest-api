@@ -3,6 +3,9 @@ import dotenv from "dotenv";
 
 // Environment variables loaded before internal imports
 dotenv.config();
+import { apiHelmetConfig } from "../config/helmetConfig";
+import cors from "cors";
+import { getCorsOptions } from "../config/corsConfig";
 import { collectDefaultMetrics, register } from "prom-client";
 import { accessLogger, errorLogger, consoleLogger, } from "./api/v1/middleware/logger";
 import errorHandler from "./api/v1/middleware/errorHandler";
@@ -12,6 +15,8 @@ import missionRoutes from "./api/v1/routes/missionRoutes";
 import pilotRoutes from "./api/v1/routes/pilotRoutes";
 import setupSwagger from "../config/swagger";
 import { HTTP_STATUS } from "./constants/httpConstants";
+import { metricsMiddleware } from "./api/v1/middleware/metricsMiddleware";
+import adminRouter from "./api/v1/routes/adminRoutes";
 
 /**
  * Represents response structure for health check endpoint
@@ -26,6 +31,11 @@ interface HealthCheckResponse {
 // Initialize Express application
 const app: Express = express();
 
+// Apply Helmet security
+app.use(apiHelmetConfig());
+// Apply CORS config
+app.use(cors(getCorsOptions()));
+
 // Logging middleware
 if (process.env.NODE_ENV === "production") {
     // In production, log to files
@@ -37,8 +47,10 @@ if (process.env.NODE_ENV === "production") {
 }
 
 collectDefaultMetrics();
-
+app.use(metricsMiddleware);
 app.use(express.json());
+
+app.use("/api/v1/admin", adminRouter);
 
 // Define a route
 /**
