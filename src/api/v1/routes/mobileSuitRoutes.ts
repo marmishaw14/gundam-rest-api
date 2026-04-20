@@ -2,6 +2,8 @@ import express from "express";
 import { validateRequest } from "../middleware/validate";
 import * as mobileSuitController from "../controllers/mobileSuitController";
 import { mobileSuitSchemas } from "../validation/mobileSuitSchemas";
+import authenticate from "../middleware/authenticate";
+import isAuthorized from "../middleware/authorize";
 
 const mobileSuitRouter = express.Router();
 
@@ -122,29 +124,39 @@ const mobileSuitRouter = express.Router();
  */
 mobileSuitRouter.post(
     "/mobile-suits",
+    authenticate,
+    isAuthorized({ hasRole: ["admin", "commander"] }),
     validateRequest(mobileSuitSchemas.create),
     mobileSuitController.createMobileSuitHandler
 );
 
 mobileSuitRouter.get(
     "/mobile-suits",
+    authenticate,
+    isAuthorized({ hasRole: ["admin", "commander", "pilot"] }),
     mobileSuitController.getAllMobileSuitsHandler
 );
 
 mobileSuitRouter.get(
     "/mobile-suits/:id",
+    authenticate,
+    isAuthorized({ hasRole: ["admin", "commander", "pilot"] }),
     validateRequest(mobileSuitSchemas.getById),
     mobileSuitController.getMobileSuitByIdHandler
 );
 
 mobileSuitRouter.put(
     "/mobile-suits/:id",
+    authenticate,
+    isAuthorized({ hasRole: ["admin", "commander"] }),
     validateRequest(mobileSuitSchemas.update),
     mobileSuitController.updateMobileSuitHandler
 );
 
 mobileSuitRouter.delete(
     "/mobile-suits/:id",
+    authenticate,
+    isAuthorized({ hasRole: ["admin", "commander"] }),
     validateRequest(mobileSuitSchemas.delete),
     mobileSuitController.deleteMobileSuitHandler
 );
