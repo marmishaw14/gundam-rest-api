@@ -13,6 +13,7 @@ import pilotRoutes from "./api/v1/routes/pilotRoutes";
 import setupSwagger from "../config/swagger";
 import { HTTP_STATUS } from "./constants/httpConstants";
 import { metricsMiddleware } from "./api/v1/middleware/metricsMiddleware";
+import adminRouter from "./api/v1/routes/adminRoutes";
 
 /**
  * Represents response structure for health check endpoint
@@ -40,6 +41,8 @@ if (process.env.NODE_ENV === "production") {
 collectDefaultMetrics();
 app.use(metricsMiddleware);
 app.use(express.json());
+
+app.use("/api/v1/admin", adminRouter);
 
 // Define a route
 /**
