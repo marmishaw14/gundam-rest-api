@@ -3,6 +3,9 @@ import dotenv from "dotenv";
 
 // Environment variables loaded before internal imports
 dotenv.config();
+import { apiHelmetConfig } from "../config/helmetConfig";
+import cors from "cors";
+import { getCorsOptions } from "../config/corsConfig";
 import { collectDefaultMetrics, register } from "prom-client";
 import { accessLogger, errorLogger, consoleLogger, } from "./api/v1/middleware/logger";
 import errorHandler from "./api/v1/middleware/errorHandler";
@@ -27,6 +30,11 @@ interface HealthCheckResponse {
 
 // Initialize Express application
 const app: Express = express();
+
+// Apply Helmet security
+app.use(apiHelmetConfig());
+// Apply CORS config
+app.use(cors(getCorsOptions()));
 
 // Logging middleware
 if (process.env.NODE_ENV === "production") {
