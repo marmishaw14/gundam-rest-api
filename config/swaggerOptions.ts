@@ -11,17 +11,25 @@ const swaggerOptions: swaggerJsdoc.Options = {
         },
         servers: [
             {
-                url: "http://localhost:3000",
+                url: "http://localhost:3010",
                 description: "Local server",
             },
         ],
         tags: [
             { name: "System", description: "System and health endpoints" },
+            { name: "Pilots", description: "Pilot management endpoints" },
             { name: "Mobile Suits", description: "Mobile suit management endpoints" },
             { name: "Weapons", description: "Weapon management endpoints" },
             { name: "Missions", description: "Mission management endpoints" },
         ],
         components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: "http",
+                    scheme: "bearer",
+                    bearerFormat: "JWT",
+                },
+            },
             schemas: {
                 ApiSuccess: {
                     type: "object",
@@ -37,6 +45,12 @@ const swaggerOptions: swaggerJsdoc.Options = {
                         error: { type: "string", example: "Validation error: Body: \"id\" is required" },
                     },
                 },
+                ApiAuthError: {
+                    type: "object",
+                    properties: {
+                        error: { type: "string", example: "Forbidden: no role found" },
+                    },
+                },
                 HealthCheckResponse: {
                     type: "object",
                     properties: {
@@ -44,6 +58,83 @@ const swaggerOptions: swaggerJsdoc.Options = {
                         uptime: { type: "number", example: 123.456 },
                         timestamp: { type: "string", format: "date-time" },
                         version: { type: "string", example: "1.0.0" },
+                    },
+                },
+                Pilot: {
+                    type: "object",
+                    properties: {
+                        id: { type: "string", example: "pilot-1" },
+                        pilotName: { type: "string", example: "Amuro Ray" },
+                        pilotRank: {
+                            type: "string",
+                            enum: ["rookie", "novice", "intermediate", "advanced", "veteran"],
+                        },
+                        pilotStatus: {
+                            type: "string",
+                            enum: ["active", "injured", "retired", "deceased", "unknown"],
+                        },
+                        assignedMobileSuitId: {
+                            type: "string",
+                            example: "ms-1",
+                            nullable: true,
+                        },
+                        imageUrl: {
+                            type: "string",
+                            format: "uri",
+                            example: "https://cdn.example.com/pilots/amuro.jpg",
+                            nullable: true,
+                        },
+                    },
+                },
+                CreatePilotRequest: {
+                    type: "object",
+                    required: ["pilotName", "pilotRank", "pilotStatus"],
+                    properties: {
+                        pilotName: { type: "string", example: "Amuro Ray" },
+                        pilotRank: {
+                            type: "string",
+                            enum: ["rookie", "novice", "intermediate", "advanced", "veteran"],
+                        },
+                        pilotStatus: {
+                            type: "string",
+                            enum: ["active", "injured", "retired", "deceased", "unknown"],
+                        },
+                        assignedMobileSuitId: {
+                            type: "string",
+                            example: "ms-1",
+                            nullable: true,
+                        },
+                        imageUrl: {
+                            type: "string",
+                            format: "uri",
+                            example: "https://cdn.example.com/pilots/amuro.jpg",
+                            nullable: true,
+                        },
+                    },
+                },
+                UpdatePilotRequest: {
+                    type: "object",
+                    properties: {
+                        pilotName: { type: "string", example: "Amuro Ray" },
+                        pilotRank: {
+                            type: "string",
+                            enum: ["rookie", "novice", "intermediate", "advanced", "veteran"],
+                        },
+                        pilotStatus: {
+                            type: "string",
+                            enum: ["active", "injured", "retired", "deceased", "unknown"],
+                        },
+                        assignedMobileSuitId: {
+                            type: "string",
+                            example: "ms-1",
+                            nullable: true,
+                        },
+                        imageUrl: {
+                            type: "string",
+                            format: "uri",
+                            example: "https://cdn.example.com/pilots/amuro.jpg",
+                            nullable: true,
+                        },
                     },
                 },
                 MobileSuit: {
