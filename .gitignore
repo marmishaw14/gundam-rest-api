@@ -1,2 +1,7 @@
 node_modules/
 dist/
+logs/
+*.log
+.env
+capstoneServiceKey.json
+coverage/
