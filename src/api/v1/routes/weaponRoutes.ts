@@ -2,6 +2,8 @@ import express from "express";
 import { validateRequest } from "../middleware/validate";
 import * as weaponController from "../controllers/weaponController";
 import { weaponSchemas } from "../validation/weaponSchemas";
+import authenticate from "../middleware/authenticate";
+import isAuthorized from "../middleware/authorize";
 
 const weaponRouter = express.Router();
 
@@ -122,6 +124,8 @@ const weaponRouter = express.Router();
  */
 weaponRouter.post(
     "/weapons",
+    authenticate,
+    isAuthorized({ hasRole: ["admin", "commander"] }),    
     validateRequest(weaponSchemas.create),
     weaponController.createWeaponHandler
 );
@@ -129,23 +133,31 @@ weaponRouter.post(
 
 weaponRouter.get(
     "/weapons",
+    authenticate,
+    isAuthorized({ hasRole: ["admin", "commander", "pilot"] }),
     weaponController.getAllWeaponsHandler
 );
 
 weaponRouter.get(
     "/weapons/:id",
+    authenticate,
+    isAuthorized({ hasRole: ["admin", "commander"] }),
     validateRequest(weaponSchemas.getById),
     weaponController.getWeaponByIdHandler
 );
 
 weaponRouter.put(
     "/weapons/:id",
+    authenticate,
+    isAuthorized({ hasRole: ["admin", "commander"] }),
     validateRequest(weaponSchemas.update),
     weaponController.updateWeaponHandler
 );
 
 weaponRouter.delete(
     "/weapons/:id",
+    authenticate,
+    isAuthorized({ hasRole: ["admin", "commander"] }),
     validateRequest(weaponSchemas.delete),
     weaponController.deleteWeaponHandler
 );
