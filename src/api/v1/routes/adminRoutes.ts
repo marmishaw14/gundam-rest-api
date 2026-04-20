@@ -9,7 +9,7 @@ const adminRouter: express.Router = express.Router();
 adminRouter.post(
     "/setCustomClaims",
     authenticate,
-    isAuthorized({ hasRole: ["admin"] }),
+    isAuthorized({ hasRole: ["admin"], allowSameUser: true }),
     setCustomClaims
 );
 
